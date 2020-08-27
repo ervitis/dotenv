@@ -1,0 +1,7 @@
+FROM fedora:32
+
+WORKDIR /tmp
+
+COPY . .
+
+CMD ["main.sh"]
