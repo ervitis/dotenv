@@ -37,6 +37,11 @@ function installListPackages {
   done < "$input"
 }
 
+function installButtercup {
+  curl -o /tmp/buttercup.rpm -L https://github.com/buttercup/buttercup-desktop/releases/download/v1.20.5/buttercup-desktop-1.20.5.x86_64.rpm
+  sudo rpm -i /tmp/buttercup.rpm
+}
+
 function updatePackages {
   sudo dnf update -y
 }
