@@ -18,15 +18,18 @@ getDistroName
 
 case $DISTRO in
   [fF]edora )
-    REQUIREMENTS_FILE="fedora"$REQUIREMENTS_FILE".sh"
+    REQUIREMENTS_FILE="fedora${REQUIREMENTS_FILE}.sh"
     ;;
 
   *)
-    echo "Not supported "$DISTRO
+    echo "Not supported ${DISTRO}"
     exit 1
     ;;
 esac
 
-source $CUR_PATH"/"$INSTALL_PACKAGES_FOLDER_NAME"/"$REQUIREMENTS_FILE
+source "${CUR_PATH}/${INSTALL_PACKAGES_FOLDER_NAME}/common.sh"
+source "${CUR_PATH}/${INSTALL_PACKAGES_FOLDER_NAME}/${REQUIREMENTS_FILE}"
+
+installRootPackages
 
 exit 0

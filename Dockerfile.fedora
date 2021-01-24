@@ -4,4 +4,13 @@ WORKDIR /tmp
 
 COPY . .
 
-CMD ["main.sh"]
+RUN bash root.sh
+
+RUN rm -rf /tmp/*
+
+RUN useradd nonroot
+
+USER nonroot
+WORKDIR /home/nonroot
+
+COPY . .

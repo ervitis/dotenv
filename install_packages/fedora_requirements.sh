@@ -41,14 +41,13 @@ function updatePackages {
   sudo dnf update -y
 }
 
-function main {
+function installRootPackages {
   updatePackages
 
   installGolang
+  installDevelopmentTools
+  installNodeJS
+  installDocker
 
   installListPackages
 }
-
-source $(pwd)"/install_packages/common.sh"
-
-main
