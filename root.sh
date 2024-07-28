@@ -4,32 +4,64 @@ CUR_PATH=$(pwd)
 INSTALL_PACKAGES_FOLDER_NAME="install_packages"
 REQUIREMENTS_FILE="_requirements"
 DISTRO=""
+OS_TYPE=""
 
-function getDistroName {
-  if [ -f /etc/lsb-release -o -d /etc/lsb-release.d ]; then
-        DISTRO=$(lsb_release -i | cut -d: -f2 | sed s/'^\t'//)
-  # Otherwise, use release info file
+function getOSInfo {
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    OS_TYPE="macOS"
+    DISTRO=$(sw_vers -productVersion)
+  elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    OS_TYPE="Linux"
+    if [ -f /etc/os-release ]; then
+      . /etc/os-release
+      DISTRO=$NAME
+    elif [ -f /etc/lsb-release ]; then
+      . /etc/lsb-release
+      DISTRO=$DISTRIB_ID
+    else
+      DISTRO=$(uname -s)
+    fi
   else
-      DISTRO=$(ls -d /etc/[A-Za-z]*[_-][rv]e[lr]* | grep -v "lsb" | cut -d'/' -f3 | cut -d'-' -f1 | cut -d'_' -f1 | head -n1)
+    OS_TYPE="unknown"
+    DISTRO="unknown"
   fi
 }
 
-getDistroName
+getOSInfo
 
-case $DISTRO in
-  [fF]edora )
+case ${OS_TYPE} in
+Linux)
+  case $DISTRO in
+  [fF]edora)
     REQUIREMENTS_FILE="fedora${REQUIREMENTS_FILE}.sh"
     ;;
-
+  *)
+    echo "Not supported ${OS_TYPE}"
+    exit 1
+    ;;
+  esac
+  ;;
+macOS)
+  case $DISTRO in
+  14.*)
+    REQUIREMENTS_FILE="macos${REQUIREMENTS_FILE}.sh"
+    ;;
   *)
     echo "Not supported ${DISTRO}"
     exit 1
     ;;
+  esac
+  ;;
 esac
 
 source "${CUR_PATH}/${INSTALL_PACKAGES_FOLDER_NAME}/common.sh"
 source "${CUR_PATH}/${INSTALL_PACKAGES_FOLDER_NAME}/${REQUIREMENTS_FILE}"
 
-installRootPackages
+if [[ "$OS_TYPE" == "Linux" ]]; then
+  installLinuxPackages
+else
+  installMacOsPackages
+fi
 
 exit 0
+

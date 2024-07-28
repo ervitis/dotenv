@@ -1,7 +1,7 @@
 function installDocker {
   sudo dnf -y install dnf-plugins-core
 
-  sudo tee /etc/yum.repos.d/docker-ce.repo<<EOF
+  sudo tee /etc/yum.repos.d/docker-ce.repo <<EOF
 [docker-ce-stable]
 name=Docker CE Stable - \$basearch
 baseurl=https://download.docker.com/linux/fedora/31/\$basearch/stable
@@ -31,10 +31,9 @@ function installListPackages {
   cur_path=$(pwd)"/install_packages"
   input=$cur_path"/list"
 
-  while IFS= read -r line
-  do
+  while IFS= read -r line; do
     sudo dnf install -y "$line"
-  done < "$input"
+  done <"$input"
 }
 
 function installButtercup {
