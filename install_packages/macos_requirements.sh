@@ -37,6 +37,11 @@ function installRestPackages {
     golang
     docker
     colima
+    raycat
+    alttab
+    rectangle
+    displaymenu
+    hiddenbar
   )
 
   cask_packages=(
