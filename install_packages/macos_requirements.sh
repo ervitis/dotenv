@@ -59,6 +59,23 @@ function installRestPackages {
   done
 }
 
+function setUpLazygit {
+  config_file="$HOME/Library/Application Support/lazygit/config.yml"
+  config_line="disableStartupPopups: false"
+
+  # Create directory if it doesn't exist
+  mkdir -p "$(dirname "$config_file")"
+
+  # Check if file exists and if the line is already present
+  if [ -f "$config_file" ] && grep -q "$config_line" "$config_file"; then
+    echo "The configuration is already present in the file."
+  else
+    # Append the line to the file
+    echo "$config_line" >>"$config_file"
+    echo "Configuration added successfully."
+  fi
+}
+
 function import_iterm_cfg {
   local script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
   local profile_path="${script_dir}/dev_profile_iterm2.json"
