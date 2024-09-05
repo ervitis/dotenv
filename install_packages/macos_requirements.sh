@@ -42,6 +42,8 @@ function installRestPackages {
     rectangle
     displaymenu
     hiddenbar
+    tflint
+    hashicorp/tap/terraform-ls
   )
 
   cask_packages=(
