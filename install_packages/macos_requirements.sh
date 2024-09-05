@@ -44,6 +44,7 @@ function installRestPackages {
     hiddenbar
     tflint
     hashicorp/tap/terraform-ls
+    jesseduffield/lazygit/lazygit
   )
 
   cask_packages=(
