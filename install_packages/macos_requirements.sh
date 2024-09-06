@@ -45,6 +45,7 @@ function installRestPackages {
     tflint
     hashicorp/tap/terraform-ls
     jesseduffield/lazygit/lazygit
+    ripgrep
   )
 
   cask_packages=(
