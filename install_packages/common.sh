@@ -4,6 +4,8 @@ function installGolang {
 
 function setUpGit {
   local gitconfig_path="$HOME/.gitconfig"
+
+  # TODO change this text into git commands
   local config_text="[diff]
 	tool = nvim
 [difftool]
@@ -28,8 +30,12 @@ function setUpGit {
   echo "Appended configuration to $gitconfig_path"
 }
 
+function neovimScriptUpdater {
+  mkdir -p ~/scripts
+  echo "nvim --headless \"+Lazy! sync\" +qa" >~/scripts/neovim_updater.sh
+}
+
 function installCommon {
   installGolang
   setUpGit
 }
-
